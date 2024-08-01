@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Detalle Tarea</h1>
+
+{% if error %}
+    <p style="color: red;">{{ error }}</p>
+{% endif %}
+<section>
+    <p>Tarea: {{ task.title }}</p>
+    <hr>
+
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div>
+            <input type="submit" value="Actualizar">
+        </div>
+    </form>
+
+    <form method="POST" action="{% url 'complete_task' task.id %}">
+        {% csrf_token %}
+        <button>Completada</button>
+    </form>
+
+    <form method="POST" action="{% url 'delete_task' task.id %}" id="formDelete">
+        {% csrf_token %}
+        <button>Eliminar</button>
+    </form>
+    
+</section>
+
+<script>
+    document.getElementById('formDelete').addEventListener("submit", event => {
+        event.preventDefault();
+
+        if(confirm('Está seguro de eliminar la tarea?')){
+            event.target.submit()
+        }
+    })
+</script>
+
+{% endblock %}

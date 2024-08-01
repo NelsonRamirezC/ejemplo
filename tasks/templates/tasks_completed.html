@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+      <h1>Tareas completadas</h1>
+
+      <ul>
+            {% for task in tasks %}
+                  <li><a href="{% url 'task_detail' task.id %}" style="text-decoration: none;">
+                              {% if task.important %}
+                                    <p><strong>{{ task.title }}</strong></p>
+                              {% else %}
+                                    <p>{{ task.title }}</p>
+                              {% endif %}
+                              <p>{{ task.description }}</p>
+                              <p>{{ task.user.username }}</p>
+                              <p>{{ task.important }}</p>
+                              <p>{{ task.date_completed|date:'d-m-Y - H:i a' }}</p>
+                              </a>
+                        <hr>             
+                  </li>
+            {% endfor %}
+      </ul>
+
+{% endblock %}
